@@ -1,0 +1,205 @@
+/* =====================================
+   PORTFOLIO ANIMATIONS
+===================================== */
+
+
+/* Fade Up */
+
+.fade-up {
+
+    animation:fadeUp 1s ease forwards;
+
+}
+
+
+
+@keyframes fadeUp {
+
+
+from {
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+
+to {
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+
+}
+
+
+
+
+
+/* Floating Image */
+
+.image-box {
+
+animation:floatImage 4s ease-in-out infinite;
+
+}
+
+
+
+@keyframes floatImage {
+
+
+0% {
+
+transform:translateY(0);
+
+}
+
+
+50% {
+
+transform:translateY(-15px);
+
+}
+
+
+100% {
+
+transform:translateY(0);
+
+}
+
+
+}
+
+
+
+
+
+/* Pulse Button */
+
+.primary {
+
+
+animation:pulseBtn 2s infinite;
+
+
+}
+
+
+
+@keyframes pulseBtn {
+
+
+0% {
+
+box-shadow:0 0 0 0 rgba(37,99,235,.5);
+
+}
+
+
+70% {
+
+box-shadow:0 0 0 15px rgba(37,99,235,0);
+
+}
+
+
+100% {
+
+box-shadow:0 0 0 0 rgba(37,99,235,0);
+
+}
+
+
+}
+
+
+
+
+
+
+/* Gradient Animation */
+
+
+.hero h1 {
+
+
+background:linear-gradient(
+90deg,
+#2563eb,
+#38bdf8
+);
+
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+
+}
+
+
+
+
+
+
+/* Card Shine Effect */
+
+
+.project-card,
+.skill-card {
+
+
+overflow:hidden;
+
+position:relative;
+
+
+}
+
+
+
+.project-card::before,
+.skill-card::before {
+
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-100%;
+
+width:50%;
+
+height:100%;
+
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,.5),
+transparent
+);
+
+
+transition:.6s;
+
+
+}
+
+
+
+.project-card:hover::before,
+.skill-card:hover::before {
+
+
+left:120%;
+
+
+}
