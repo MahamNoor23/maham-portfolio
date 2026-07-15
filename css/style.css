@@ -1085,17 +1085,10 @@ transform:translateY(0);
 
 
 }
-
-
-
 .contact-item h4 {
-
-
     color:var(--heading);
-
     margin-bottom:3px;
-
-
+    text-align: left;
 }
 
 
