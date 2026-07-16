@@ -1,119 +1,99 @@
 /* =====================================================
    MAHAM NOOR PORTFOLIO
-   MAIN JAVASCRIPT
+   Main JavaScript
 ===================================================== */
 
 
+/* =========================
+   MOBILE MENU
+========================= */
 document.addEventListener("DOMContentLoaded", function(){
 
 
-
-/* =========================
-   LOAD HEADER
-========================= */
-
-
-const header = document.getElementById("header");
-
-
-if(header){
-
-fetch("header.html")
-
+fetch("components/header.html")
 .then(response => response.text())
-
 .then(data => {
 
-header.innerHTML = data;
-
-
-/* initialize menu after loading header */
-
-initMenu();
-
-initActiveNavigation();
+document.getElementById("header").innerHTML = data;
 
 });
 
 
-}
 
-
-
-
-
-/* =========================
-   LOAD FOOTER
-========================= */
-
-
-const footer = document.getElementById("footer");
-
-
-if(footer){
-
-
-fetch("footer.html")
-
+fetch("components/footer.html")
 .then(response => response.text())
+.then(data => {
 
-.then(data=>{
-
-
-footer.innerHTML=data;
-
-
-/* current year */
-
-const year = document.querySelector(".current-year");
-
-
-if(year){
-
-year.textContent = new Date().getFullYear();
-
-}
-
+document.getElementById("footer").innerHTML = data;
 
 });
 
 
+});
+
+const menuBtn = document.querySelector(".menu-btn");
+const navbar = document.querySelector(".navbar");
+
+
+if(menuBtn){
+
+    menuBtn.addEventListener("click", ()=>{
+
+        navbar.classList.toggle("active");
+
+
+        const icon = menuBtn.querySelector("i");
+
+
+        if(navbar.classList.contains("active")){
+
+            icon.classList.remove("fa-bars");
+
+            icon.classList.add("fa-xmark");
+
+        }
+
+        else{
+
+            icon.classList.remove("fa-xmark");
+
+            icon.classList.add("fa-bars");
+
+        }
+
+
+    });
+
 }
 
 
 
 
+/* Close menu after clicking link */
 
 
-/* =========================
-   HEADER SCROLL EFFECT
-========================= */
+document.querySelectorAll(".navbar a").forEach(link=>{
 
 
-window.addEventListener("scroll",function(){
+    link.addEventListener("click",()=>{
 
 
-const headerElement=document.querySelector(".header");
+        navbar.classList.remove("active");
 
 
-if(headerElement){
+        if(menuBtn){
+
+            const icon = menuBtn.querySelector("i");
 
 
-if(window.scrollY > 50){
+            icon.classList.remove("fa-xmark");
 
-headerElement.classList.add("scrolled");
+            icon.classList.add("fa-bars");
 
-}
-
-else{
-
-headerElement.classList.remove("scrolled");
-
-}
+        }
 
 
-}
-
+    });
 
 
 });
@@ -129,13 +109,14 @@ headerElement.classList.remove("scrolled");
 ========================= */
 
 
-const typingElement=document.querySelector(".typing");
+const typingElement = document.querySelector(".typing");
 
 
 if(typingElement){
 
 
-const words=[
+const words = [
+
 
 "WordPress Developer",
 
@@ -143,76 +124,88 @@ const words=[
 
 "Gutenberg Developer",
 
-"Elementor Developer",
+"Elementor Specialist",
 
-"Webflow Developer"
+"Webflow Developer",
+
+"CMS Developer"
+
 
 ];
 
 
-let wordIndex=0;
 
-let charIndex=0;
+let wordIndex = 0;
 
-let deleting=false;
+let charIndex = 0;
 
-
-
-function typing(){
+let deleting = false;
 
 
-let currentWord=words[wordIndex];
+
+function typeEffect(){
+
+
+let currentWord = words[wordIndex];
+
 
 
 if(!deleting){
 
 
-typingElement.textContent =
-currentWord.substring(0,charIndex++);
+typingElement.textContent = currentWord.substring(
+0,
+charIndex++
+);
 
 
 
 if(charIndex > currentWord.length){
 
-deleting=true;
 
-setTimeout(typing,1500);
+deleting = true;
+
+
+setTimeout(typeEffect,1500);
+
 
 return;
 
+
 }
 
 
 }
+
+
 
 else{
 
 
-typingElement.textContent =
-currentWord.substring(0,charIndex--);
+typingElement.textContent = currentWord.substring(
+0,
+charIndex--
+);
 
 
 
-if(charIndex < 0){
+if(charIndex === 0){
 
-deleting=false;
+
+deleting = false;
+
 
 wordIndex++;
 
+
 if(wordIndex >= words.length){
 
-wordIndex=0;
-
-}
+wordIndex = 0;
 
 }
 
 
 }
-
-
-
-setTimeout(typing,deleting ? 60 : 120);
 
 
 
@@ -220,8 +213,14 @@ setTimeout(typing,deleting ? 60 : 120);
 
 
 
-typing();
+setTimeout(typeEffect,100);
 
+
+}
+
+
+
+typeEffect();
 
 
 }
@@ -235,35 +234,110 @@ typing();
 
 
 /* =========================
-   REVEAL ANIMATION
+   HEADER BACKGROUND ON SCROLL
 ========================= */
 
 
-const reveals=document.querySelectorAll(".reveal");
+const header = document.querySelector(".header");
 
 
-function revealOnScroll(){
+window.addEventListener("scroll",()=>{
 
 
-reveals.forEach(element=>{
+if(window.scrollY > 50){
 
 
-const windowHeight=window.innerHeight;
+header.style.background =
+"rgba(255,255,255,0.95)";
 
-const elementTop=element.getBoundingClientRect().top;
 
+header.style.boxShadow =
+"0 5px 20px rgba(0,0,0,0.08)";
 
-if(elementTop < windowHeight - 100){
-
-element.classList.add("active");
 
 }
+
+else{
+
+
+header.style.background =
+"rgba(255,255,255,0.85)";
+
+
+header.style.boxShadow =
+"none";
+
+
+}
+
 
 
 });
 
 
+
+
+
+
+
+/* =========================
+   SCROLL REVEAL ANIMATION
+========================= */
+
+
+const revealElements =
+document.querySelectorAll(
+".section, .skill-card, .project-card, .timeline-item"
+);
+
+
+
+const revealOnScroll = ()=>{
+
+
+revealElements.forEach(element=>{
+
+
+const windowHeight =
+window.innerHeight;
+
+
+
+const elementTop =
+element.getBoundingClientRect().top;
+
+
+
+if(elementTop < windowHeight - 100){
+
+
+element.style.opacity="1";
+
+element.style.transform="translateY(0)";
+
+
 }
+
+
+
+});
+
+
+};
+
+
+
+revealElements.forEach(element=>{
+
+
+element.style.opacity="0";
+
+element.style.transform="translateY(40px)";
+
+element.style.transition="0.7s ease";
+
+
+});
 
 
 
@@ -282,184 +356,26 @@ revealOnScroll();
 
 
 /* =========================
-   SMOOTH SCROLL
+   CURRENT YEAR FOOTER
 ========================= */
 
 
-document.querySelectorAll('a[href^="#"]')
-.forEach(anchor=>{
-
-
-anchor.addEventListener("click",function(e){
-
-
-const target=document.querySelector(
-this.getAttribute("href")
-);
+const footerYear =
+document.querySelector("footer p");
 
 
 
-if(target){
+if(footerYear){
 
 
-e.preventDefault();
+const year = new Date().getFullYear();
 
 
-target.scrollIntoView({
-
-behavior:"smooth"
-
-});
+footerYear.innerHTML =
+`© ${year} Maham Noor. All Rights Reserved.`;
 
 
 }
-
-
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-
-/* =========================
-   IMAGE LAZY LOAD
-========================= */
-
-
-document.querySelectorAll("img")
-.forEach(img=>{
-
-
-img.setAttribute(
-"loading",
-"lazy"
-);
-
-
-});
-
-
-
-
-
-
-
-/* =========================
-   EXTERNAL LINKS
-========================= */
-
-
-document.querySelectorAll(
-'a[target="_blank"]'
-)
-.forEach(link=>{
-
-
-link.setAttribute(
-"rel",
-"noopener noreferrer"
-);
-
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-/* =====================================================
-   FUNCTIONS
-===================================================== */
-
-
-
-
-
-
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-
-function initMenu(){
-
-
-
-const menuBtn=document.querySelector(".menu-btn");
-
-const navbar=document.querySelector(".navbar");
-
-
-
-if(!menuBtn || !navbar){
-
-return;
-
-}
-
-
-
-menuBtn.addEventListener(
-"click",
-()=>{
-
-
-navbar.classList.toggle("active");
-
-
-menuBtn.classList.toggle("open");
-
-
-
-});
-
-
-
-
-
-
-
-navbar.querySelectorAll("a")
-.forEach(link=>{
-
-
-link.addEventListener(
-"click",
-()=>{
-
-
-navbar.classList.remove("active");
-
-menuBtn.classList.remove("open");
-
-
-});
-
-
-});
-
-
-
-
-}
-
-
-
 
 
 
@@ -470,41 +386,42 @@ menuBtn.classList.remove("open");
 ========================= */
 
 
-function initActiveNavigation(){
+const sections =
+document.querySelectorAll("section");
+
+
+const navLinks =
+document.querySelectorAll(".navbar a");
 
 
 
-const links=document.querySelectorAll(
-".navbar a"
-);
+window.addEventListener("scroll",()=>{
+
+
+let current = "";
 
 
 
-let currentPage =
-window.location.pathname.split("/").pop();
+sections.forEach(section=>{
+
+
+const sectionTop =
+section.offsetTop - 150;
 
 
 
-if(currentPage===""){
-
-currentPage="index.html";
-
-}
+const sectionHeight =
+section.clientHeight;
 
 
 
-links.forEach(link=>{
+if(
+window.scrollY >= sectionTop &&
+window.scrollY < sectionTop + sectionHeight
+){
 
 
-let href =
-link.getAttribute("href");
-
-
-
-if(href===currentPage){
-
-
-link.classList.add("active");
+current = section.getAttribute("id");
 
 
 }
@@ -515,4 +432,28 @@ link.classList.add("active");
 
 
 
+navLinks.forEach(link=>{
+
+
+link.style.color="";
+
+
+
+if(
+link.getAttribute("href")
+===
+"#"+current
+){
+
+
+link.style.color="#2563eb";
+
+
 }
+
+
+
+});
+
+
+});
